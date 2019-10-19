@@ -1,2 +1,5 @@
-# cs207-FinalProject
-CS207, fall 2019, final project repository
+Group #14
+Daniel Cox
+Anna Davydova
+Stephen Moon
+Valentina Toll Villagra
