@@ -2,10 +2,13 @@ language: python
 python:
     - "3.6"
 before_install:
+    - pip freeze > requirements.txt
     - pip install pytest pytest-cov
     - pip install codecov
-#script:
-   # - pytest --cov=./
+script:
+    - echo finished
+codecov:
+  token: 9810c48a-54e2-4f51-9802-9d110628681b
 after_success:
     - codecov
 
