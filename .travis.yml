@@ -4,6 +4,8 @@ python:
 before_install:
     - pip install pytest pytest-cov
     - pip install codecov
+codecov:
+  token: 9810c48a-54e2-4f51-9802-9d110628681b
 script:
     - pytest --cov=./
 after_success:
