@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3
 
-# import pytest
+import pytest
 import roots
 
 def test_quadroots_result():
