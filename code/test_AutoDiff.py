@@ -1,6 +1,30 @@
 from AutoDiff import AutoDiff
 import numpy as np
 
+#---------------Testing Urnary------------------------------------
+def test_pos():
+    x = AutoDiff(3, 1)
+    f = +x
+    assert f.val == 3
+    assert f.derv == 1
+
+def test_neg():
+    x = AutoDiff(3, 1)
+    f = -x
+    assert f.val == -3
+    assert f.derv == -1
+
+def test_pos_0():
+    x = AutoDiff(3, 0)
+    f = +x
+    assert f.val == 3
+    assert f.derv == 0
+
+def test_neg_0():
+    x = AutoDiff(3, 0)
+    f = -x
+    assert f.val == -3
+    assert f.derv == 0
 
 #---------------Testing Addition------------------------------------
 def test_left_addition():

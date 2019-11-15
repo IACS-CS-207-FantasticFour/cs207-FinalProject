@@ -25,6 +25,12 @@ class AutoDiff():
         self.val = float(val)
         self.derv = float(derv)
 
+    def __pos__(self):
+        return AutoDiff(self.val, self.derv)
+
+    def __neg__(self):
+        return AutoDiff(-1*self.val, -1*self.derv)
+
     def __mul__(self, other):
         try:
             return AutoDiff(self.val * other.val, self.derv * other.val + other.derv*self.val)
