@@ -19,6 +19,13 @@ class AutoDiff():
     Which partial derivative is stored in the derv attribute of the final AutoDiff object depends on which
     input variable's derv attribute is initially set to 1, while the derv attributes of the other input variables
     are set to 0.
+
+    Example:
+    x = AutoDiff(3,1)
+    y = AutoDiff(2,0)
+    f = x**2 + y**2 + 4
+    print(f.val, f.dev)
+    (17, 6)
     '''
 
     def __init__(self, val, derv=1):
@@ -96,5 +103,4 @@ class AutoDiff():
 
     def sqrt(self):
         return AutoDiff(np.sqrt(self.val), (1/(2*np.sqrt(self.val) )*self.derv) )
-
 
