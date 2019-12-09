@@ -247,6 +247,11 @@ def test_sqrt():
     assert f.val == 5
     assert f.derv == 0.1
 
+def test_sqrt():
+    x = AutoDiff(-2, 1)
+    f = np.sqrt(x)
+    assert f == 0
+
 def test_exp():
     x = AutoDiff(4, 1)
     f = np.exp(x)

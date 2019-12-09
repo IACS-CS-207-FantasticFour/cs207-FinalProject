@@ -152,7 +152,11 @@ class AutoDiff():
     # -----------Overloading the Square Root function ------------------------------------------
 
     def sqrt(self):
-        return AutoDiff(np.sqrt(self.val), (1/(2*np.sqrt(self.val) )*self.derv) )
+        if self.val < 0:
+            print('negative number has been input to the sqaure root function')
+            return 0
+        else:
+            return AutoDiff(np.sqrt(self.val), (1/(2*np.sqrt(self.val) )*self.derv) )
 
     # -----------Overloading the logistic function ---------------------------------------------
 
@@ -234,3 +238,4 @@ class AutoDiff():
                 return True
             else:
                 return False
+
