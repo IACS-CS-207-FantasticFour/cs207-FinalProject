@@ -164,7 +164,6 @@ def Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, pr
     datetime
     yahoo_fin 
     requests_html 
-
     """
     
     
@@ -262,7 +261,7 @@ def OptionsRun():
         
             print("Please Enter Ticker")
             try:
-                value = str(input(''))
+                value = str(input())
                 si.get_live_price(value)
                 
             except ValueError:
@@ -337,7 +336,7 @@ def OptionsRun():
             #print output
             print("Black Scholes Delta: ", delta_bs)
             
-            K = AutoDiff.AutoDiff(strike, 1)  #####################--AUTODIFF USED HERE                         
+            K = AutoDiff(strike, 1)  #####################--AUTODIFF USED HERE                         
             
             simple_implied = np.sqrt(2*np.pi/T_t) * ( ( C -(S - K)/2 ) / ( S - (S - K)/2 ) ) 
             deltaPi_simple_implied= simple_implied.derv
@@ -390,4 +389,3 @@ def OptionsRun():
     ObtainInputs()
     
 OptionsRun()
-        

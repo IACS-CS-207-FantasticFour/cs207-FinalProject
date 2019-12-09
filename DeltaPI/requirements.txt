@@ -1,3 +1,5 @@
+--index-url https://pypi.python.org/simple/
+
 ADvis==0.0.1
 appdirs==1.4.3
 beautifulsoup4==4.8.1
@@ -8,7 +10,6 @@ chardet==3.0.4
 cssselect==1.1.0
 cycler==0.10.0
 decorator==4.4.0
-deltapi-sjmoonny==0.0.5
 docutils==0.15.2
 fake-useragent==0.1.11
 future==0.18.1

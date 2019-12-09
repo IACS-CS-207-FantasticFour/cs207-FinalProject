@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: deltapi-sjmoonny
-Version: 0.0.6
+Version: 1.0.6
 Summary: DeltaPI Package for CS207
 Home-page: https://github.com/IACS-CS-207-FantasticFour/cs207-FinalProject
 Author: Anna Davydova, Dan Cox, Valentina Toll Villagra, Stephen Moon
@@ -16,7 +16,6 @@ Description: # DeltaPI
         * Valentina Toll Villagra
         ### Badges:
         [![Build Status](https://travis-ci.com/IACS-CS-207-FantasticFour/cs207-FinalProject.svg?branch=master)](https://travis-ci.com/IACS-CS-207-FantasticFour/cs207-FinalProject)
-        
         [![codecov](https://codecov.io/gh/IACS-CS-207-FantasticFour/cs207-FinalProject/branch/master/graph/badge.svg)](https://codecov.io/gh/IACS-CS-207-FantasticFour/cs207-FinalProject)
         
         This project aims to deliver an Automatic Differentiation Software DeltaPi that will calculate derivatives efficiently and accurately, making it useful across a wide spectrum of applications. In this package, we will execute the forward mode of Automatic Differentiation. We will also provide an extension package HedgeDeltaPi that will calculate delta for European Call and Put options, allowing for efficient delta hedging.

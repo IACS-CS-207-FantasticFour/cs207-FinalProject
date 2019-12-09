@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="deltapi-sjmoonny",
-    version="0.0.6",
+    version="1.0.6",
     author="Anna Davydova, Dan Cox, Valentina Toll Villagra, Stephen Moon",
     author_email="stephenmoon@college.harvard.edu",
     description="DeltaPI Package for CS207",

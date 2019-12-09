@@ -1,11 +1,13 @@
+MANIFEST.in
 README.md
 setup.py
 DeltaPI/__init__.py
 DeltaPI/AutoDiff/All_derivatives.py
 DeltaPI/AutoDiff/AutoDiff.py
 DeltaPI/AutoDiff/__init__.py
-DeltaPI/AutoDiff/test_All_derivatives.py
-DeltaPI/AutoDiff/test_AutoDiff.py
+DeltaPI/AutoDiff/AutoDiff_Tests/__init__.py
+DeltaPI/AutoDiff/AutoDiff_Tests/test_All_derivatives.py
+DeltaPI/AutoDiff/AutoDiff_Tests/test_AutoDiff.py
 DeltaPI/Extension/DeltaHedgePi.py
 DeltaPI/Extension/__init__.py
 deltapi_sjmoonny.egg-info/PKG-INFO
