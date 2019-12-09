@@ -1,4 +1,4 @@
-from AutoDiff import AutoDiff
+from AutoDiff import AutoDiff, logist, logN
 import numpy as np
 
 #---------------Testing Urnary------------------------------------
@@ -240,7 +240,7 @@ def test_arctanhx():
     assert round(f.derv,4) == 1.3333
 
 
-#---------------Testing exp, log, log2, log10, sqrt, functions------------------------------------
+#---------------Testing exp, log, log2, log10, logN, sqrt, functions------------------------------------
 def test_sqrt():
     x = AutoDiff(25, 1)
     f = np.sqrt(x)
@@ -276,12 +276,28 @@ def test_log10():
     assert round(f.val,4) == 2
     assert round(f.derv,4) == 0.0043
 
+def test_logN_1():
+    x = AutoDiff(2, 1)
+    f = logN(x, 5)
+    assert round(f.val,4) == 0.4307
+    assert round(f.derv,4) == 0.3107
+
+def test_logN_2():
+    x = 2
+    f = logN(x, 5)
+    assert round(f,4) == 0.4307
+
 #---------------Testing the logistic function ------------------------------------
-def test_logistic():
+def test_logist_1():
     x = AutoDiff(1, 1)
-    f = x.logist()
+    f = logist(x)
     assert round(f.val,4) == 0.7311
     assert round(f.derv,4) == 0.1966
+
+def test_logist_2():
+    x = 1
+    f = logist(x)
+    assert round(f, 4) == 0.7311
 #---------------Testing comparison operators ------------------------------------
 
 def test_less_than_greater_than1():

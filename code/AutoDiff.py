@@ -239,3 +239,17 @@ class AutoDiff():
             else:
                 return False
 
+
+def logist(x):
+    if isinstance(x, AutoDiff):
+        return AutoDiff(1 / (1 + np.exp(-1 * (x.val))),
+                        (1 / (1 + np.exp(-1 * (x.val)))) * (1 - (1 / (1 + np.exp(-1 * (x.val))))) * x.derv)
+    else:
+        return 1/(1+np.exp(-1*x))
+
+def logN(x, N):
+    if isinstance(x, AutoDiff):
+        return AutoDiff(np.log(x.val)/np.log(N), (1/(x.val*np.log(N)) *x.derv))
+    else:
+        return np.log(x)/np.log(N)
+
