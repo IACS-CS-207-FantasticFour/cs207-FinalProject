@@ -10,7 +10,7 @@ import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d  
-from DeltaPI.AutoDiff import AutoDiff  #importing DeltaPi package!
+from AutoDiff import AutoDiff  #importing DeltaPi package!
 
 
 #first we define Black Scholes function to calculate delta and vega pull uptodate financial data
@@ -261,7 +261,7 @@ def OptionsRun():
         
             print("Please Enter Ticker")
             try:
-                value = str(input())
+                value = str(input(''))
                 si.get_live_price(value)
                 
             except ValueError:
