@@ -1,4 +1,3 @@
-#necessary imports
 import pandas_datareader as pdr
 from pandas_datareader.data import DataReader as dr
 import datetime as dt
@@ -10,7 +9,7 @@ import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d  
-from AutoDiff import AutoDiff  #importing DeltaPi package!
+from AutoDiff2 import AutoDiff, logist, logN
 
 
 #first we define Black Scholes function to calculate delta and vega pull uptodate financial data
@@ -52,26 +51,32 @@ def BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike):
     
     EXAMPLE:
     =======
-    Let's suppose you wanted to run a GE call expriing on Jan 17, 2020, with  strike 10.
+    We are not writing a formal doc test here because the outputs are not static. This illustration should
+    help the user understand how the pakage work. 
+    
+    Let's suppose you wanted to run a GE call expriing on Jan 17, 2020, with  strike 12.
     ticker='GE'
     exp_year=2020
     exp_month=1
     exp_day=17
     exp_date=str(str(exp_month)+'/'+str(exp_day)+'/'+str(exp_year))
     op_type='calls'
-    strike=10
+    strike=12
+    
+    
    
-    >>> delta_bs, vega, T_t, S, C = BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike) 
-    0.2803917681986156 0.009142607098052206 0.10684931506849316 11.100000381469727 0.0
-    since the function is pulling live data for this doctest the output will keep changing
+    delta_bs, vega, T_t, S, C = BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike) 
     
+
+    0.2803917681986156 0.009142607098052206 0.10684931506849316 11.100000381469727 1.0
     
+    !!since the function is pulling live data for this doctest the output will keep changing!!
     
     
     """
     
     
-    #convert to exp_date formate
+    #convert to exp_date format
     exp_date=str(str(exp_month)+'/'+str(exp_day)+'/'+str(exp_year))
     #get current risk free rate
     #we are using 10tyear treasury which is industry standard
@@ -235,8 +240,42 @@ def Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, pr
     plt.show(fig)
             
 def OptionsRun():
+    """ This an interactive enclosing functionn for two nested functions that prompts the user 
+    to enter the details about their option positive and returns 3 deltas calculated with Black 
+    Scholes formula, Bharadia and Corrado estimation. The closure also calculates the amounnt of 
+    stock that the user needs to buy or sell short to hedge their position and plots 2 volatlity surfaces. 
     
+    INPUTS: (user prompted to enter these in the following order)
+    ======
+    option type:   the user is prompted to enter option type or exit
+    ticker:        accepts both upper and lower case (string), checks if its valid
+    strike:        price at which the opion can be excercised (int)
+    exp_year:      year of expiration (int), checks if its valid
+    exp_month:     month of expiration (int), checks if its valid
+    exp_day:       day of expiration (int), checks if its valid
+    position:      number of long/short puts or calls for this stock that are on the books
+    
+    OUTPUT:
+    ======
+    delta Black Sholes:    deploying BS_Delta function above, Black Scholes delta is returned
+    delta Bharadia:        deploying AutoDiff package partial derrivatives of implied vol are calculated
+                           and delta estimate is returned
+    delta Corrado:         deploying AutoDiff package partial derrivatives of implied vol are calculated
+                           and delta estimate is returned
+    hedging indstructions: whether the trader should buy or sell short and how much of the underlying asset.
+    two plots:             volatlity surface plots for Bharadia and Corrado methods respectively
+    
+    NOTES:
+    ====== 
+    This package relies on yahoo_fin package for live stock prices and option price data as well as stock's 
+    historical standard deviation calculated from the data pulled for the share price from the previous year. 
+    If there are any issues with the yahoo_fin pacakge being able to pull this data due to yahoo specific
+    glitches, this extension package will not run.  In the 'real world' application, this package would be 
+    linked to a more realiable platform like Bloomberg, which most of the traders use but is very expensive.
+    Yahoo finance is free but slow annd not always reliable.
+    """
     def ObtainInputs():
+            #nested function to collect data from the user
             print("Please Select Type of Option to Evaluate")
             print("1) Exit")
             print("2) Puts")
@@ -247,6 +286,7 @@ def OptionsRun():
                 print("Please enter number from the options above: ")
                 option=int(input(""))
          
+            #collect option type variable
             while option not in [1,2,3]:
                     option=int(input("Please enter number from the options above: "))
             if option==3:
@@ -259,11 +299,11 @@ def OptionsRun():
                         return
  
             
-        
+            #collect ticker variable
             print("Please Enter Ticker")
             try:
                 value = str(input(''))
-                si.get_live_price(value)
+                si.get_live_price(value) #here we check if the ticker is valid
                 
             except ValueError:
                 print ("Sorry, {} is not a valid ticker, try again".format(value))
@@ -271,7 +311,7 @@ def OptionsRun():
         
         
             ticker=value
-            
+            #collect strike value
             print("Please Enter Strike")
             try:
                 option=int(input(""))
@@ -279,6 +319,7 @@ def OptionsRun():
             strike=option
             
             def Date():
+                #nested function to organize data values
                 today=date.today()
                 print("Please Enter Expiration Year")
                 try:
@@ -329,9 +370,9 @@ def OptionsRun():
                 exp_date=str(str(exp_month)+'/'+str(exp_day)+'/'+str(exp_year))
             
                 return exp_year, exp_month, exp_day, exp_date
-                
+            #obtain the valid dates in the right format  
             exp_year, exp_month, exp_day, exp_date = Date()
-            
+            #calculate black scholes delta
             delta_bs, vega, T_t, S, C = BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike) 
             
             #print output
@@ -341,19 +382,20 @@ def OptionsRun():
             
             simple_implied = np.sqrt(2*np.pi/T_t) * ( ( C -(S - K)/2 ) / ( S - (S - K)/2 ) ) 
             deltaPi_simple_implied= simple_implied.derv
-            complex_implied = np.sqrt(2*np.pi/T_t) * (1/(S + K)) *  ( C - ((S - K)/2)) 
-                                                                    
-            #\+ ((C -(S-K)/2)**2 - ((S-K)**2/np.pi)) )/10000                   
-            
+            complex_implied = np.sqrt(2*np.pi/T_t) * (1/(S + K)) *  ( C - ((S - K)/2)\
+                                                                     + np.sqrt( (C - (S-K)/2)**2 - (S -K)**2/np.pi )) 
             deltaPi_complex_implied = complex_implied.derv                                            
             delta_simple=delta_bs+vega*deltaPi_simple_implied
             delta_complex=delta_bs+vega*deltaPi_complex_implied
+            
+            #print deltas after calculating them
             if delta_complex is None:
                 delta_complex=delta_simple
-                print('Could not approximate Corrado due to ')
+                print('Could not approximate Corrado due to complex numbers ')
             print("Bharadia delta: ", delta_simple)
             print("Corrado delta: ", delta_complex)
             
+            #check if the user would like to get delta hedging advice
             print("Would You Like to Delta Hedge Your Position: y/n?")
             try:
                 option=str(input(""))
@@ -378,9 +420,11 @@ def OptionsRun():
                 print("According to Black Scholes you need to ", action, "",abs(int(recomend)), " shares of ",ticker )
                 print("According to Bharadia apporach you need to ", action, "",abs(int(recomend1)), " shares of ", ticker)
                 print("Accoding to Corrado approach you need to ", action, "", abs(int(recomend2)), " shares of ", ticker)
+                #plot 3D vol plots
                 Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike,C)    
                 return
             else:
+                #plot 3D vol polots
                 Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike)
                 return
             
@@ -389,5 +433,7 @@ def OptionsRun():
         
     ObtainInputs()
     
-OptionsRun()
+    
         
+    
+OptionsRun()
