@@ -1,5 +1,6 @@
-from AutoDiff import AutoDiff
+from AutoDiff import AutoDiff, logist, logN
 import numpy as np
+import pytest
 
 #---------------Testing Urnary------------------------------------
 def test_pos():
@@ -187,11 +188,21 @@ def test_arcsinx():
     assert f.val == np.arcsin(0.5)
     assert round(f.derv,4) == 1.1547
 
+def test_arcsinx2():
+    x = AutoDiff(-2, 1)
+    with pytest.raises(Exception):
+        f = np.arcsin(x)
+
 def test_arccosx():
     x = AutoDiff(0.5, 1)
     f = np.arccos(x)
     assert f.val == np.arccos(0.5)
     assert round(f.derv,4) == -1.1547
+
+def test_arccosx2():
+    x = AutoDiff(-2, 1)
+    with pytest.raises(Exception):
+        f = np.arccos(x)
 
 def test_arctanx():
     x = AutoDiff(0.5, 1)
@@ -240,12 +251,17 @@ def test_arctanhx():
     assert round(f.derv,4) == 1.3333
 
 
-#---------------Testing exp, log, log2, log10, sqrt, functions------------------------------------
+#---------------Testing exp, log, log2, log10, logN, sqrt, functions------------------------------------
 def test_sqrt():
     x = AutoDiff(25, 1)
     f = np.sqrt(x)
     assert f.val == 5
     assert f.derv == 0.1
+
+def test_sqrt():
+    x = AutoDiff(-2, 1)
+    f = np.sqrt(x)
+    assert f == 0
 
 def test_exp():
     x = AutoDiff(4, 1)
@@ -271,12 +287,28 @@ def test_log10():
     assert round(f.val,4) == 2
     assert round(f.derv,4) == 0.0043
 
+def test_logN_1():
+    x = AutoDiff(2, 1)
+    f = logN(x, 5)
+    assert round(f.val,4) == 0.4307
+    assert round(f.derv,4) == 0.3107
+
+def test_logN_2():
+    x = 2
+    f = logN(x, 5)
+    assert round(f,4) == 0.4307
+
 #---------------Testing the logistic function ------------------------------------
-def test_logistic():
+def test_logist_1():
     x = AutoDiff(1, 1)
-    f = x.logist()
+    f = logist(x)
     assert round(f.val,4) == 0.7311
     assert round(f.derv,4) == 0.1966
+
+def test_logist_2():
+    x = 1
+    f = logist(x)
+    assert round(f, 4) == 0.7311
 #---------------Testing comparison operators ------------------------------------
 
 def test_less_than_greater_than1():
@@ -296,6 +328,7 @@ def test_less_than_greater_than1():
 def test_less_than_greater_than2():
     x = AutoDiff(2, 1)
     y = AutoDiff(3, 1)
+    z = AutoDiff(3, 1)
     a = 1
     assert (a < y) == True
     assert (x <= a) == False
@@ -307,8 +340,11 @@ def test_less_than_greater_than2():
     assert (a <= x) == True
     assert (a >= x) == False
     assert (y == a) == False
+    assert (z == y) == True
+    assert (z != y) == False
     a = 3
     assert (y == a) == True
+    assert (x >= a) == False
     assert (a == y) == True
     assert (a < y) == False
     assert (y < a) == False

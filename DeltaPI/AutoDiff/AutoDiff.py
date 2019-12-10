@@ -152,12 +152,11 @@ class AutoDiff():
     # -----------Overloading the Square Root function ------------------------------------------
 
     def sqrt(self):
-        return AutoDiff(np.sqrt(self.val), (1/(2*np.sqrt(self.val) )*self.derv) )
-
-    # -----------Overloading the logistic function ---------------------------------------------
-
-    def logist(self):
-        return AutoDiff( 1/(1 + np.exp(-1*(self.val))), (1/(1 + np.exp(-1*(self.val)))) * (1 - (1/(1 + np.exp(-1*(self.val))))) *self.derv)
+        if self.val < 0:
+            print('negative number has been input to the sqaure root function')
+            return 0
+        else:
+            return AutoDiff(np.sqrt(self.val), (1/(2*np.sqrt(self.val) )*self.derv) )
 
     #-----------Overloading the Comparison Operators >, <, >=, <=, ==. != -------------------------
 
@@ -234,3 +233,47 @@ class AutoDiff():
                 return True
             else:
                 return False
+
+
+def logist(x):
+    '''
+    Function to evaluate the logistic function at the input x, and if the input is
+    an AutoDiff object, then also the derivative of the logistic function with
+    respect to x
+
+    Inputs:
+        x (either a python float object or AutoDiff object)
+
+    Returns:
+        If x is a python float object, it returns the value of the logistic function evaluated at x (float).
+        If x is an AutoDiff object, it returns another AutoDiff object whose val attribute contains the
+        logistic function evaluated at x, and whose derv attribute contains the derivative of the
+        logistic function with respect to x evaluated at x.
+    '''
+    if isinstance(x, AutoDiff):
+        return AutoDiff(1 / (1 + np.exp(-1 * (x.val))),
+                        (1 / (1 + np.exp(-1 * (x.val)))) * (1 - (1 / (1 + np.exp(-1 * (x.val))))) * x.derv)
+    else:
+        return 1/(1+np.exp(-1*x))
+
+def logN(x, N):
+    '''
+    Function to evaluate the logarithm of the input x using the base N, and if the input is
+    an AutoDiff object, then also the derivative of the logarithm function with repsect to
+    x at x
+
+    Inputs:
+        x (either a python float object or AutoDiff object)
+        N (int) the base of the logarithm function
+
+    Returns:
+        If x is a python float object, it returns the value of the logarithm base N function evaluated at x (float).
+        If x is an AutoDiff object, it returns another AutoDiff object whose val attribute contains the
+        logarithm base N function  evaluated at x, and whose derv attribute contains the derivative of the
+        logarithm base N function with respect to x evaluated at x.
+    '''
+    if isinstance(x, AutoDiff):
+        return AutoDiff(np.log(x.val)/np.log(N), (1/(x.val*np.log(N)) *x.derv))
+    else:
+        return np.log(x)/np.log(N)
+
