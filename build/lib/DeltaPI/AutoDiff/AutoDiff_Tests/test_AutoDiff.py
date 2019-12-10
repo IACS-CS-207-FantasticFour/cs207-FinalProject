@@ -271,6 +271,15 @@ def test_log10():
     assert round(f.val,4) == 2
     assert round(f.derv,4) == 0.0043
 
+<<<<<<< HEAD:build/lib/DeltaPI/AutoDiff/AutoDiff_Tests/test_AutoDiff.py
+#---------------Testing the logistic function ------------------------------------
+def test_logistic():
+    x = AutoDiff(1, 1)
+    f = x.logist()
+    assert round(f.val,4) == 0.7311
+    assert round(f.derv,4) == 0.1966
+=======
+>>>>>>> master:code/test_AutoDiff.py
 #---------------Testing comparison operators ------------------------------------
 
 def test_less_than_greater_than1():

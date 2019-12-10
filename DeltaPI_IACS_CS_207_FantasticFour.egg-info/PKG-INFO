@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: DeltaPI-IACS-CS-207-FantasticFour
+Version: 0.0.3
+Summary: DeltaPI Package for CS207
+Home-page: https://github.com/IACS-CS-207-FantasticFour/cs207-FinalProject
+Author: Anna Davydova, Dan Cox, Valentina Toll Villagra, Stephen Moon
+Author-email: stephenmoon@college.harvard.edu
+License: UNKNOWN
+Description: # Group #14
+        This repository contains CS207, fall 2019, final project.
+        ## Group Members
+        * Daniel Cox
+        * Anna Davydova
+        * Stephen Moon
+        * Valentina Toll Villagra
+        ### Badges:
+        [![Build Status](https://travis-ci.com/IACS-CS-207-FantasticFour/cs207-FinalProject.svg?branch=master)](https://travis-ci.com/IACS-CS-207-FantasticFour/cs207-FinalProject)
+        
+        
+        
+        
+        [![codecov](https://codecov.io/gh/IACS-CS-207-FantasticFour/cs207-FinalProject/branch/master/graph/badge.svg)](https://codecov.io/gh/IACS-CS-207-FantasticFour/cs207-FinalProject)
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown

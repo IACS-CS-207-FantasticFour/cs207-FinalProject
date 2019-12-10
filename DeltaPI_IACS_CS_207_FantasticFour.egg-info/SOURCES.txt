@@ -1,0 +1,13 @@
+README.md
+setup.py
+DeltaPI/__init__.py
+DeltaPI/code/All_derivatives.py
+DeltaPI/code/AutoDiff.py
+DeltaPI/code/Sigma_imp.py
+DeltaPI/code/__init__.py
+DeltaPI/code/test_All_derivatives.py
+DeltaPI/code/test_AutoDiff.py
+DeltaPI_IACS_CS_207_FantasticFour.egg-info/PKG-INFO
+DeltaPI_IACS_CS_207_FantasticFour.egg-info/SOURCES.txt
+DeltaPI_IACS_CS_207_FantasticFour.egg-info/dependency_links.txt
+DeltaPI_IACS_CS_207_FantasticFour.egg-info/top_level.txt
