@@ -10,8 +10,9 @@ import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d  
+import DeltaPI
 from DeltaPI.AutoDiff import AutoDiff
-from DeltaPI.AutoDiff.AutoDiff import logist, logN
+from DeltaPI.AutoDiff.AutoDiff import *
 
 
 #first we define Black Scholes function to calculate delta and vega pull uptodate financial data
@@ -389,7 +390,7 @@ def OptionsRun():
             #print output
             print("Black Scholes Delta: ", delta_bs)
             
-            K = AutoDiff.AutoDiff(strike, 1)  #####################--AUTODIFF USED HERE                         
+            K = AutoDiff(strike, 1)  #####################--AUTODIFF USED HERE                         
             
             simple_implied = np.sqrt(2*np.pi/T_t) * ( ( C -(S - K)/2 ) / ( S - (S - K)/2 ) ) 
             deltaPi_simple_implied= simple_implied.derv
