@@ -10,7 +10,7 @@ import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d  
-from AutoDiff import AutoDiff  #importing DeltaPi package!
+from DeltaPI.AutoDiff import AutoDiff  #importing DeltaPi package!
 
 
 #first we define Black Scholes function to calculate delta and vega pull uptodate financial data
@@ -164,6 +164,7 @@ def Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, pr
     datetime
     yahoo_fin 
     requests_html 
+
     """
     
     
@@ -336,7 +337,7 @@ def OptionsRun():
             #print output
             print("Black Scholes Delta: ", delta_bs)
             
-            K = AutoDiff(strike, 1)  #####################--AUTODIFF USED HERE                         
+            K = AutoDiff.AutoDiff(strike, 1)  #####################--AUTODIFF USED HERE                         
             
             simple_implied = np.sqrt(2*np.pi/T_t) * ( ( C -(S - K)/2 ) / ( S - (S - K)/2 ) ) 
             deltaPi_simple_implied= simple_implied.derv
@@ -389,3 +390,4 @@ def OptionsRun():
     ObtainInputs()
     
 OptionsRun()
+        
