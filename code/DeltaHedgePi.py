@@ -1,3 +1,4 @@
+#necessary imports
 import pandas_datareader as pdr
 from pandas_datareader.data import DataReader as dr
 import datetime as dt
@@ -9,7 +10,7 @@ import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d  
-from AutoDiff2 import AutoDiff, logist, logN
+from AutoDiff import AutoDiff, logist, logN
 
 
 #first we define Black Scholes function to calculate delta and vega pull uptodate financial data
@@ -86,7 +87,8 @@ def BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike):
     #get current date
     today=date.today()
     #get stock price
-    S=si.get_live_price(ticker)
+    stock = yf.Ticker(ticker)
+    S=stock.history(period='min')['Open'][0]
     #get price of option closest to the same date/strike as our option
     try:
         table=options.get_options_chain(ticker,exp_date )
@@ -188,7 +190,8 @@ def Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, pr
                 sd=np.std(prices)
                 return sd
     vol=vol_est(today, ticker)
-    S=si.get_live_price(ticker)
+    stock = yf.Ticker(ticker)
+    S=stock.history(period='min')['Open'][0]
     S_low=int(S-2*vol)
     S_high=int(S+2*vol)
     S_range=list(range(S_low, S_high))
@@ -269,7 +272,7 @@ def OptionsRun():
     ====== 
     This package relies on yahoo_fin package for live stock prices and option price data as well as stock's 
     historical standard deviation calculated from the data pulled for the share price from the previous year. 
-    If there are any issues with the yahoo_fin pacakge being able to pull this data due to yahoo specific
+    If there are any issues with the yahoo_fin and yfinance pacakges being able to pull this data due to yahoo specific
     glitches, this extension package will not run.  In the 'real world' application, this package would be 
     linked to a more realiable platform like Bloomberg, which most of the traders use but is very expensive.
     Yahoo finance is free but slow annd not always reliable.
@@ -303,7 +306,10 @@ def OptionsRun():
             print("Please Enter Ticker")
             try:
                 value = str(input(''))
-                si.get_live_price(value) #here we check if the ticker is valid
+                stock = yf.Ticker(value)#checking if the ticker is valid
+
+                S=stock.history(period='min')['Open'][0]
+                #si.get_live_price(value) #here we check if the ticker is valid
                 
             except ValueError:
                 print ("Sorry, {} is not a valid ticker, try again".format(value))
@@ -425,7 +431,7 @@ def OptionsRun():
                 return
             else:
                 #plot 3D vol polots
-                Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike)
+                Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, C)
                 return
             
             return   
