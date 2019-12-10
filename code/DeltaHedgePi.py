@@ -69,7 +69,7 @@ def BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike):
     delta_bs, vega, T_t, S, C = BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike) 
     
 
-    0.2803917681986156 0.009142607098052206 0.10684931506849316 11.100000381469727 1.0
+ 0.2803917681986156 0.009142607098052206 0.10684931506849316 11.100000381469727 0.4027907848942922
     
     !!since the function is pulling live data for this doctest the output will keep changing!!
     
