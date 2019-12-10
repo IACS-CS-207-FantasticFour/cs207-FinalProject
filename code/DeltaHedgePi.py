@@ -16,7 +16,7 @@ from AutoDiff import AutoDiff, logist, logN
 #first we define Black Scholes function to calculate delta and vega pull uptodate financial data
 
 def BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike):
-    """ Obtain upto date financial data for stock price, option price, volatility, risk free rate
+    """ Obtains uptodate financial data for stock price, option price, volatility, risk free rate
     and calculates delta and vega from Black Scholes equation. Returns delta, vega, time to expiration,
     most uptodate share price and corresponding option price.
     
@@ -49,6 +49,7 @@ def BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike):
     import sys
     !{sys.executable} -m pip install yahoo_fin
     !{sys.executable} -m pip install requests_html
+    !{sys.executable} -m pip install yfinance
     
     EXAMPLE:
     =======
@@ -69,7 +70,7 @@ def BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike):
     delta_bs, vega, T_t, S, C = BS_Delta(ticker, exp_year, exp_month, exp_day, op_type, strike) 
     
 
- 0.2803917681986156 0.009142607098052206 0.10684931506849316 11.100000381469727 0.4027907848942922
+    0.2803917681986156 0.009142607098052206 0.10684931506849316 11.100000381469727 0.4027907848942922
     
     !!since the function is pulling live data for this doctest the output will keep changing!!
     
@@ -158,8 +159,8 @@ def Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, pr
     
     OUTPUT:
     ======
-    3Dplot Bharadia:  surface plot for estimated stock price volatilty over time and share price space
-    3Dplot Corrado:   surface plot for estimate of stock volatility over time and share price space.
+    3Dplot Bharadia:  surface plot for estimated stock price volatilty over time to expiration and share price space
+    3Dplot Corrado:   surface plot for estimate of stock volatility over time time to expiration and share price space.
     
     NOTES:
     ====== 
@@ -170,7 +171,8 @@ def Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, pr
     matplotlib.pyplot 
     datetime
     yahoo_fin 
-    requests_html 
+    requests_html
+    yfinance
 
     """
     
@@ -192,9 +194,11 @@ def Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, pr
     vol=vol_est(today, ticker)
     stock = yf.Ticker(ticker)
     S=stock.history(period='min')['Open'][0]
+    #create a range of stock prices based on a + - 2 standard dev band (95% CI)
     S_low=int(S-2*vol)
     S_high=int(S+2*vol)
     S_range=list(range(S_low, S_high))
+    #create an entire range of days upto the expriation date
     days_range=list(range(1,int((T-t).days)))
     C=price
     vol_s=[]
@@ -244,7 +248,7 @@ def Volatility_Surface(ticker, exp_year, exp_month, exp_day, op_type, strike, pr
             
 def OptionsRun():
     """ This an interactive enclosing functionn for two nested functions that prompts the user 
-    to enter the details about their option positive and returns 3 deltas calculated with Black 
+    to enter the details about their option position and returns 3 deltas calculated with Black 
     Scholes formula, Bharadia and Corrado estimation. The closure also calculates the amounnt of 
     stock that the user needs to buy or sell short to hedge their position and plots 2 volatlity surfaces. 
     
@@ -270,12 +274,12 @@ def OptionsRun():
     
     NOTES:
     ====== 
-    This package relies on yahoo_fin package for live stock prices and option price data as well as stock's 
+    This package relies on yahoo_fin and yfinance packages for live stock prices and option price data as well as stock's 
     historical standard deviation calculated from the data pulled for the share price from the previous year. 
-    If there are any issues with the yahoo_fin and yfinance pacakges being able to pull this data due to yahoo specific
+    If there are any issues with the yahoo_fin and/or yfinance pacakges being able to pull this data due to yahoo specific
     glitches, this extension package will not run.  In the 'real world' application, this package would be 
-    linked to a more realiable platform like Bloomberg, which most of the traders use but is very expensive.
-    Yahoo finance is free but slow annd not always reliable.
+    linked to a more realiable platform like Bloomberg, which is what most of the traders use but is very expensive.
+    Yahoo finance is free but slow and not always reliable.
     """
     def ObtainInputs():
             #nested function to collect data from the user
@@ -309,7 +313,7 @@ def OptionsRun():
                 stock = yf.Ticker(value)#checking if the ticker is valid
 
                 S=stock.history(period='min')['Open'][0]
-                #si.get_live_price(value) #here we check if the ticker is valid
+                #si.get_live_price(value) #use this if yfinance is not working
                 
             except ValueError:
                 print ("Sorry, {} is not a valid ticker, try again".format(value))
@@ -325,7 +329,7 @@ def OptionsRun():
             strike=option
             
             def Date():
-                #nested function to organize data values
+                #nested function to organize and validate data values
                 today=date.today()
                 print("Please Enter Expiration Year")
                 try:
