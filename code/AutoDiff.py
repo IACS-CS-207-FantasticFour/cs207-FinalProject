@@ -158,11 +158,6 @@ class AutoDiff():
         else:
             return AutoDiff(np.sqrt(self.val), (1/(2*np.sqrt(self.val) )*self.derv) )
 
-    # -----------Overloading the logistic function ---------------------------------------------
-
-    def logist(self):
-        return AutoDiff( 1/(1 + np.exp(-1*(self.val))), (1/(1 + np.exp(-1*(self.val)))) * (1 - (1/(1 + np.exp(-1*(self.val))))) *self.derv)
-
     #-----------Overloading the Comparison Operators >, <, >=, <=, ==. != -------------------------
 
     def __lt__(self, other):

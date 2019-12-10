@@ -1,5 +1,6 @@
 from AutoDiff import AutoDiff, logist, logN
 import numpy as np
+import pytest
 
 #---------------Testing Urnary------------------------------------
 def test_pos():
@@ -187,11 +188,21 @@ def test_arcsinx():
     assert f.val == np.arcsin(0.5)
     assert round(f.derv,4) == 1.1547
 
+def test_arcsinx2():
+    x = AutoDiff(-2, 1)
+    with pytest.raises(Exception):
+        f = np.arcsin(x)
+
 def test_arccosx():
     x = AutoDiff(0.5, 1)
     f = np.arccos(x)
     assert f.val == np.arccos(0.5)
     assert round(f.derv,4) == -1.1547
+
+def test_arccosx2():
+    x = AutoDiff(-2, 1)
+    with pytest.raises(Exception):
+        f = np.arccos(x)
 
 def test_arctanx():
     x = AutoDiff(0.5, 1)
@@ -317,6 +328,7 @@ def test_less_than_greater_than1():
 def test_less_than_greater_than2():
     x = AutoDiff(2, 1)
     y = AutoDiff(3, 1)
+    z = AutoDiff(3, 1)
     a = 1
     assert (a < y) == True
     assert (x <= a) == False
@@ -328,8 +340,11 @@ def test_less_than_greater_than2():
     assert (a <= x) == True
     assert (a >= x) == False
     assert (y == a) == False
+    assert (z == y) == True
+    assert (z != y) == False
     a = 3
     assert (y == a) == True
+    assert (x >= a) == False
     assert (a == y) == True
     assert (a < y) == False
     assert (y < a) == False
