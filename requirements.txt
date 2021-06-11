@@ -49,7 +49,7 @@ urllib3==1.25.6
 virtualenv==16.7.7
 w3lib==1.21.0
 webencodings==0.5.1
-websockets==8.1
+websockets==9.1
 xlrd==1.2.0
 yahoo-fin==0.8.2
 yahoo-finance==1.4.0
