@@ -1,5 +1,4 @@
 # DeltaPI
-# Group #14
 This repository contains CS207, fall 2019, final project.
 ## Group Members
 * Daniel Cox
@@ -15,5 +14,7 @@ This project delivers an Automatic Differentiation Software package "DeltaPi" th
 The Package is installable at:
 <https://pypi.org/project/DeltaPI-FantasticFour/>.   
 
-Videos demionstrating how to use DeltaPi are included in the folder "Demo Movies".    ***Start HERE***
+Videos demionstrating how to use DeltaPi are included in the folder "Demo Movies".   ***Start HERE***
+
+
 The code for the package can be found in the "DeltaPi" folder.
