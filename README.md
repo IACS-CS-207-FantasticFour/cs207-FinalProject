@@ -15,4 +15,5 @@ This project delivers an Automatic Differentiation Software package "DeltaPi" th
 The Package is installable at:
 <https://pypi.org/project/DeltaPI-FantasticFour/>.   
 
-Videos demionstrating how to use DeltaPi are included in the folder "Demo Movies".  The code can be found 
+Videos demionstrating how to use DeltaPi are included in the folder "Demo Movies".    ***Start HERE***
+The code for the package can be found in the "DeltaPi" folder.
